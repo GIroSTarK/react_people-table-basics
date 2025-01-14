@@ -1,4 +1,4 @@
-export const PersonList = () => {
+export const PersonTable = () => {
   return (
     <table
       data-cy="peopleTable"

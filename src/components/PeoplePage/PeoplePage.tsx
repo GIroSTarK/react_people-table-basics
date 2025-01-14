@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Loader } from '../Loader';
-import { PersonList } from '../PersonList';
+import { PersonTable } from '../PersonTable';
 import { Person } from '../../types';
 import { getPeople } from '../../api';
 
@@ -44,7 +44,7 @@ export const PeoplePage = () => {
             <p data-cy="noPeopleMessage">There are no people on the server</p>
           )}
 
-          {!isLoading && <PersonList />}
+          {!isLoading && <PersonTable />}
         </div>
       </div>
     </>
