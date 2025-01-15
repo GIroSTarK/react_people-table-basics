@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Loader } from '../Loader';
-import { PersonTable } from '../PersonTable';
+import { Loader } from '../../components/Loader';
+import { PersonTable } from '../../components/PersonTable';
 import { Person } from '../../types';
 import { getPeople } from '../../api';
 
@@ -14,7 +14,27 @@ export const PeoplePage = () => {
       try {
         const peopleData = await getPeople();
 
-        setPeople(peopleData);
+        const modifiedPeopleData = peopleData.map(person => {
+          const modifiedPerson = { ...person };
+          const personMother = peopleData.find(
+            p => p.name === person.motherName,
+          );
+          const personFather = peopleData.find(
+            p => p.name === person.fatherName,
+          );
+
+          if (personMother) {
+            modifiedPerson.mother = personMother;
+          }
+
+          if (personFather) {
+            modifiedPerson.father = personFather;
+          }
+
+          return modifiedPerson;
+        });
+
+        setPeople(modifiedPeopleData);
       } catch {
         setIsError(true);
       } finally {
@@ -44,7 +64,7 @@ export const PeoplePage = () => {
             <p data-cy="noPeopleMessage">There are no people on the server</p>
           )}
 
-          {!isLoading && <PersonTable />}
+          {!isLoading && <PersonTable people={people} />}
         </div>
       </div>
     </>
